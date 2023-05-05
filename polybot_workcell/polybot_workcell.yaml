@@ -1,0 +1,40 @@
+
+config:
+  ros_namespace: bio_workcell
+  funcx_local_ep: ""
+  globus_local_ep: ""
+  ##
+  globus_search_index: "aefcecc6-e554-4f8c-a25b-147f23091944"
+  globus_portal_ep: "bb8d048a-2cad-4029-a9c7-671ec5d1f84d"
+  ##
+  globus_group: "dda56f31-53d1-11ed-bd8b-0db7472df7d6"
+
+modules:
+  - name: ur5
+    type: wei_ros_node
+    model: ur5
+    config:
+      ros_node: '/ur5_client/UR5_Client_Node'
+
+  - name: chemspeed
+    type: wei_tcp_node
+    model: chemspeed
+    config:
+      tcp_address: "batman.cels.anl.gov"
+      tcp_port: "5556"
+    positions:
+      default: []
+
+  - name: tecan
+    type: wei_tcp_node
+    model: tecan
+    config:
+      tcp_address: "batman.cels.anl.gov"
+      tcp_port: "5557"
+    positions:
+      default: []
+
+
+
+
+
