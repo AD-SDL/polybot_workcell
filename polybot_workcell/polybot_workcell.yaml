@@ -20,7 +20,7 @@ modules:
     type: wei_tcp_node
     model: chemspeed
     config:
-      tcp_address: "batman.cels.anl.gov"
+      tcp_address: "146.137.240.64"
       tcp_port: "5556"
     positions:
       default: []
