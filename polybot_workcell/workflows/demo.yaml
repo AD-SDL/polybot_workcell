@@ -1,6 +1,6 @@
 metadata:
   name: PCR - Workflow
-  author: Casey Stone, Rafael Vescovi
+  author: Doga Ozgulbas
   info: Initial PCR workflow for RPL workcell
   version: 0.1
 
@@ -37,7 +37,7 @@ flowdef:
     module: chemspeed
     command: run_chemspeed
     args:
-      test: 'test'
+      foo: "bar"
     checks: RESOURCE_CHECK
     comment: resource check not implemented, but will be
 
@@ -99,14 +99,60 @@ flowdef:
   #   module: plateEx
   #   command: transfer
   #   args:
-  #     source: peeler.positions.default
-  #     target: camera_module.positions.plate_station
-  #     source_plate_rotation: narrow
-  #     target_plate_rotation: narrow
+  #     source: chemspeed.deck1
+  #     target: tecan
+  #     source_plate_rotation: wide
+  #     target_plate_rotation: wide   
+  #   checks: null
+  #   comment: Place plate in Tecan
 
-  # - name: Take Picture
-  #   module: camera_module
-  #   command: take_picture
+  # - name: run Tecan
+  #   module: tecan
+  #   command: run_protocol
+  #   args: 
+  #     protocol_path: "C:\\Users\\svcaibio\\Documents\\Hidex Sense\\Campaign2_wei.sensetemplate"
+  #   checks: null
+  #   comment: Run protocol at tecan
+
+  # - name: Open Tecan
+  #   module: tecan
+  #   command: open
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Open Tecan Gate
+
+  # - name: Move plate into platenest
+  #   module: ur5
+  #   command: transfer
   #   args:
-  #     save_location: local_run_results
-  #     file_name: "final_image.jpg"
+  #     source: tecan
+  #     target: platenest
+  #     source_plate_rotation: wide
+  #     target_plate_rotation: wide   
+  #   checks: null
+  #   comment: Place plate in Tecan
+
+  # - name: Close Tecan
+  #   module: tecan
+  #   command: close
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Close Tecan Gate
+
+  # # - name: Move to camera_module
+  # #   module: plateEx
+  # #   command: transfer
+  # #   args:
+  # #     source: peeler.positions.default
+  # #     target: camera_module.positions.plate_station
+  # #     source_plate_rotation: narrow
+  # #     target_plate_rotation: narrow
+
+  # # - name: Take Picture
+  # #   module: camera_module
+  # #   command: take_picture
+  # #   args:
+  # #     save_location: local_run_results
+  # #     file_name: "final_image.jpg"
