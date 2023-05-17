@@ -4,7 +4,7 @@ metadata:
   info: Initial PCR workflow for RPL workcell
   version: 0.1
 
-workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
+workcell: /home/rpl/workspace/polybot_workcell/polybot_workcell/polybot_workcell.yaml
 
 modules:
   - name: chemspeed
@@ -13,87 +13,87 @@ modules:
 
 
 flowdef:
-  - name: Move plate into Chemspeed
-    module: ur5
-    command: transfer
-    args:
-      source: platestack
-      target: chemspeed.deck1
-      source_plate_rotation: narrow
-      target_plate_rotation: wide   
-    checks: null
-    comment: Place plate in Chemspeed deck1
+  # - name: Move plate into Chemspeed
+  #   module: ur5
+  #   command: transfer
+  #   args:
+  #     source: platestack
+  #     target: chemspeed.deck1
+  #     source_plate_rotation: narrow
+  #     target_plate_rotation: wide   
+  #   checks: null
+  #   comment: Place plate in Chemspeed deck1
 
-  - name: Remove lid
-    module: ur5
-    command: remove_lid
-    args:
-      source: chemspeed.deck1
-      target: platenest
-    checks: null
-    comment: Remove lid
+  # - name: Remove lid
+  #   module: ur5
+  #   command: remove_lid
+  #   args:
+  #     source: chemspeed.deck1
+  #     target: platenest
+  #   checks: null
+  #   comment: Remove lid
 
   - name: Mix Reactions
     module: chemspeed
-    command: run_protocol
+    command: run_chemspeed
     args:
-      protocol_path: "C:\\Users\\svcaibio\\Dev\\hidex_module\\hidex_driver\\ahk\\test_hso\\test.hso"
+      test: 'test'
     checks: RESOURCE_CHECK
     comment: resource check not implemented, but will be
 
-  - name: Open Tecan
-    module: tecan
-    command: open
-    args: 
-      foo: "bar"
-    checks: null
-    comment: Open Tecan Gate
+  # - name: Open Tecan
+  #   module: tecan
+  #   command: open
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Open Tecan Gate
 
-  - name: Move plate into Tecan
-    module: ur5
-    command: transfer
-    args:
-      source: chemspeed.deck1
-      target: tecan
-      source_plate_rotation: wide
-      target_plate_rotation: wide   
-    checks: null
-    comment: Place plate in Tecan
+  # - name: Move plate into Tecan
+  #   module: ur5
+  #   command: transfer
+  #   args:
+  #     source: chemspeed.deck1
+  #     target: tecan
+  #     source_plate_rotation: wide
+  #     target_plate_rotation: wide   
+  #   checks: null
+  #   comment: Place plate in Tecan
 
-  - name: run Tecan
-    module: tecan
-    command: run_protocol
-    args: 
-      protocol_path: "C:\\Users\\svcaibio\\Documents\\Hidex Sense\\Campaign2_wei.sensetemplate"
-    checks: null
-    comment: Run protocol at tecan
+  # - name: run Tecan
+  #   module: tecan
+  #   command: run_protocol
+  #   args: 
+  #     protocol_path: "C:\\Users\\svcaibio\\Documents\\Hidex Sense\\Campaign2_wei.sensetemplate"
+  #   checks: null
+  #   comment: Run protocol at tecan
 
-  - name: Open Tecan
-    module: tecan
-    command: open
-    args: 
-      foo: "bar"
-    checks: null
-    comment: Open Tecan Gate
+  # - name: Open Tecan
+  #   module: tecan
+  #   command: open
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Open Tecan Gate
 
-  - name: Move plate into platenest
-    module: ur5
-    command: transfer
-    args:
-      source: tecan
-      target: platenest
-      source_plate_rotation: wide
-      target_plate_rotation: wide   
-    checks: null
-    comment: Place plate in Tecan
+  # - name: Move plate into platenest
+  #   module: ur5
+  #   command: transfer
+  #   args:
+  #     source: tecan
+  #     target: platenest
+  #     source_plate_rotation: wide
+  #     target_plate_rotation: wide   
+  #   checks: null
+  #   comment: Place plate in Tecan
 
-  - name: Close Tecan
-    module: tecan
-    command: close
-    args: 
-      foo: "bar"
-    checks: null
-    comment: Close Tecan Gate
+  # - name: Close Tecan
+  #   module: tecan
+  #   command: close
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Close Tecan Gate
 
   # - name: Move to camera_module
   #   module: plateEx

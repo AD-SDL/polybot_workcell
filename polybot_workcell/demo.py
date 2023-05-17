@@ -8,7 +8,7 @@ from rpl_wei.wei_workcell_base import WEI
 from pathlib import Path
 
 def main():
-    wf_path = Path('/home/rpl/workspace/rpl_workcell/bio_workcell/workflows/demo.yaml')
+    wf_path = Path('/home/rpl/workspace/polybot_workcell/polybot_workcell/workflows/demo.yaml')
 
     wei_client = WEI(wf_config = wf_path.resolve(), workcell_log_level=logging.ERROR, workflow_log_level=logging.ERROR)
 
@@ -28,8 +28,7 @@ def main():
     # exp_folder = exp_path / exp_label
     
     # # if not (os.path.isdir(exp_path)):
-    # #     os.makedirs(exp_path)
-    # #     print("makingdir")
+    # #     os.makedirs(exp_pa      
     # # if not (os.path.isdir(exp_folder)):
     # #     os.mkdir(exp_folder)
     # # if not (os.path.isdir(exp_folder/"results")):
