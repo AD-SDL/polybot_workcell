@@ -33,13 +33,13 @@ flowdef:
   #   checks: null
   #   comment: Remove lid
 
-  - name: Mix Reactions
-    module: chemspeed
-    command: run_chemspeed
-    args:
-      foo: "bar"
-    checks: RESOURCE_CHECK
-    comment: resource check not implemented, but will be
+  # - name: Mix Reactions
+  #   module: chemspeed
+  #   command: run_chemspeed
+  #   args:
+  #     foo: "bar"
+  #   checks: RESOURCE_CHECK
+  #   comment: resource check not implemented, but will be
 
   # - name: Open Tecan
   #   module: tecan
@@ -60,13 +60,13 @@ flowdef:
   #   checks: null
   #   comment: Place plate in Tecan
 
-  # - name: run Tecan
-  #   module: tecan
-  #   command: run_protocol
-  #   args: 
-  #     protocol_path: "C:\\Users\\svcaibio\\Documents\\Hidex Sense\\Campaign2_wei.sensetemplate"
-  #   checks: null
-  #   comment: Run protocol at tecan
+  - name: run Tecan
+    module: tecan
+    command: run_tecan
+    args: 
+      protocol_path: "path"
+    checks: null
+    comment: Run protocol at tecan
 
   # - name: Open Tecan
   #   module: tecan
