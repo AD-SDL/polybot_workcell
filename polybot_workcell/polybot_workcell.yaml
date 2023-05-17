@@ -20,7 +20,7 @@ modules:
     type: wei_tcp_node
     model: chemspeed
     config:
-      tcp_addres s: "146.139.48.69"
+      tcp_address: "146.139.48.77"
       tcp_port: "5556"
     positions:
       default: []
@@ -29,7 +29,7 @@ modules:
     type: wei_tcp_node
     model: tecan
     config:
-      tcp_address: "146.139.48.77"
+      tcp_address: "146.139.48.69"
       tcp_port: "5557"
     positions:
       default: []
