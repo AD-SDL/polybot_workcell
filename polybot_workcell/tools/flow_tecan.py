@@ -13,6 +13,7 @@ class C2Flow(GladierBaseClient):
        'gladier_tools.transfer.Transfer',
         Tecan_Read,
         Tecan_Proc,
+        #Update_Model,
         GatherMetaData,
        'gladier_tools.publish.Publishv2'
     ]
