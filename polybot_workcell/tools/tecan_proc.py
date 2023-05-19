@@ -2,7 +2,7 @@ from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
 
 
 
-def c2_hidex_ext(**data):
+def proc_tecan(**data):
     import pandas as pd
     import csv
     import os
@@ -54,8 +54,8 @@ def c2_hidex_ext(**data):
     return blob #df, timestamp_list, reading_date, reading_time, basename 
 
 @generate_flow_definition
-class C2_parse_hidex(GladierBaseTool):
-    funcx_functions = [c2_hidex_ext]
+class Tecan_Proc(GladierBaseTool):
+    funcx_functions = [proc_tecan]
     required_input = [
         'funcx_endpoint_compute'
     ]

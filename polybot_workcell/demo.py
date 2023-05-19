@@ -18,20 +18,5 @@ def main():
     run_info = wei_client.run_workflow(payload=payload)
     print(run_info)
 
-    # exp_path =  Path(exp_path)
-    # exp_label = Path(exp_label)
-    # exp_folder = exp_path / exp_label
-    
-    # # if not (os.path.isdir(exp_path)):
-    # #     os.makedirs(exp_pa      
-    # # if not (os.path.isdir(exp_folder)):
-    # #     os.mkdir(exp_folder)
-    # # if not (os.path.isdir(exp_folder/"results")):
-    # #     os.mkdir(exp_folder/"results") 
-
-    # exp_folder = run_info['run_folder']
-    # print("publishing:")
-    # publish_iter(exp_folder/"results", exp_folder)
-
 if __name__ == "__main__":
     main()
