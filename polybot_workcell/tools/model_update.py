@@ -1,8 +1,8 @@
-from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
+from gladier import GladierBaseTool, generate_flow_definition
 
 
 
-def c2_hidex_ext(**data):
+def tecan_model_update(**data):
     import pandas as pd
     import csv
     import os
@@ -54,8 +54,8 @@ def c2_hidex_ext(**data):
     return blob #df, timestamp_list, reading_date, reading_time, basename 
 
 @generate_flow_definition
-class C2_parse_hidex(GladierBaseTool):
-    funcx_functions = [c2_hidex_ext]
+class Model_Update(GladierBaseTool):
+    funcx_functions = [tecan_model_update]
     required_input = [
         'funcx_endpoint_compute'
     ]

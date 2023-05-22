@@ -1,7 +1,7 @@
 from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
 
 
-def excel_to_csv(**data):
+def read_tecan(**data):
     """
     Extracts Raw OD(590) data from Hidex excel file into csv file
 
@@ -34,8 +34,8 @@ def excel_to_csv(**data):
 
 
 @generate_flow_definition
-class C2_read_hidex(GladierBaseTool):
-    funcx_functions = [excel_to_csv]
+class Tecan_Read(GladierBaseTool):
+    funcx_functions = [read_tecan]
     required_input = [
         'funcx_endpoint_compute'
     ]

@@ -1,20 +1,19 @@
-from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
+from gladier import GladierBaseClient, generate_flow_definition
 
-from c2_read_hidex import C2_read_hidex
-from c2_check_contam import C2_check_contam
-from c2_blank_adjust import C2_blank_adjust
-from c2_gen_graphs import C2_gen_graphs
+from tecan_read import Tecan_Read
+from tecan_proc import Tecan_Proc
 from gather_data import GatherMetaData
+
 from pathlib import Path
+
 @generate_flow_definition(modifiers={'publishv2_gather_metadata' : {'payload': '$.GatherMetadata.details.result[0]'}})
 class C2Flow(GladierBaseClient):
     globus_group = 'dda56f31-53d1-11ed-bd8b-0db7472df7d6'
     gladier_tools = [
-       # 'gladier_tools.transfer.Transfer',
-        C2_read_hidex,
-        C2_check_contam,
-        C2_blank_adjust,
-        C2_gen_graphs,
+       'gladier_tools.transfer.Transfer',
+        Tecan_Read,
+        Tecan_Proc,
+        #Update_Model,
         GatherMetaData,
        'gladier_tools.publish.Publishv2'
     ]
