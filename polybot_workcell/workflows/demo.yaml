@@ -84,13 +84,13 @@ flowdef:
     checks: null
     comment: Run protocol at tecan
 
-  - name: Open Tecan
-    module: tecan
-    command: open_gate
-    args: 
-      foo: "bar"
-    checks: null
-    comment: Open Tecan Gate
+  # - name: Open Tecan
+  #   module: tecan
+  #   command: open_gate
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Open Tecan Gate
 
   # - name: Move plate into platenest
   #   module: ur5
@@ -103,13 +103,13 @@ flowdef:
   #   checks: null
   #   comment: Place plate in Tecan
 
-  - name: Close Tecan
-    module: tecan
-    command: close_gate
-    args: 
-      foo: "bar"
-    checks: null
-    comment: Close Tecan Gate
+  # - name: Close Tecan
+  #   module: tecan
+  #   command: close_gate
+  #   args: 
+  #     foo: "bar"
+  #   checks: null
+  #   comment: Close Tecan Gate
 
   # - name: Move to camera_module
   #   module: plateEx
