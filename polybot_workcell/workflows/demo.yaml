@@ -45,7 +45,31 @@ flowdef:
   #   module: chemspeed
   #   command: run_chemspeed
   #   args:
-  #     foo: "bar"
+  #     name_protocol: "closed_loop1"
+  #   checks: RESOURCE_CHECK
+  #   comment: resource check not implemented, but will be
+
+  # - name: Mix Reactions
+  #   module: chemspeed
+  #   command: run_chemspeed
+  #   args:
+  #     name_protocol: "closed_loop2"
+  #   checks: RESOURCE_CHECK
+  #   comment: resource check not implemented, but will be
+  
+  # - name: Mix Reactions
+  #   module: chemspeed
+  #   command: run_chemspeed
+  #   args:
+  #     name_protocol: "closed_loop3"
+  #   checks: RESOURCE_CHECK
+  #   comment: resource check not implemented, but will be
+
+  # - name: Mix Reactions
+  #   module: chemspeed
+  #   command: run_chemspeed
+  #   args:
+  #     name_protocol: "closed_loop4"
   #   checks: RESOURCE_CHECK
   #   comment: resource check not implemented, but will be
 
