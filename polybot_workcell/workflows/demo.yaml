@@ -13,16 +13,70 @@ modules:
 
 
 flowdef:
-  # - name: Move plate into Chemspeed
-  #   module: ur5
-  #   command: transfer
-  #   args:
-  #     source: platestack
-  #     target: chemspeed.deck1
-  #     source_plate_rotation: narrow
-  #     target_plate_rotation: wide   
-  #   checks: null
-  #   comment: Place plate in Chemspeed deck1
+
+#- name: Mix Reactions
+#  module: chemspeed
+#  command: open_chemspeed
+#  args:
+#    foo: "bar"
+#  checks: RESOURCE_CHECK
+#  comment: resource check not implemented, but will be
+
+#- name: Mix Reactions
+#  module: chemspeed
+#  command: run_chemspeed
+#  args:
+#    name_protocol: "closed_loop1"
+#  checks: RESOURCE_CHECK
+#  comment: resource check not implemented, but will be
+
+#- name: Mix Reactions
+#  module: chemspeed
+#  command: close_chemspeed
+#  args:
+#    name_protocol: "closed_loop1"
+#  checks: RESOURCE_CHECK
+#  comment: resource check not implemented, but will be
+
+# - name: Open Tecan
+#   module: tecan
+#   command: open_gate
+#   args: 
+#     foo: "bar"
+#   checks: null
+#   comment: Open Tecan Gate
+
+# - name: run Tecan
+#   module: tecan
+#   command: run_tecan
+#   args: 
+#     protocol_path: "path"
+#   checks: null
+#   comment: Run protocol at tecan
+
+# - name: Close Tecan
+#   module: tecan
+#   command: close_gate
+#   args: 
+#     foo: "bar"
+#   checks: null
+#   comment: Close Tecan Gate
+
+ #- name: Move plate into Tecan
+ #    module: ur5
+ #    command: transfer
+ #    args:
+ #      foo: "bar" 
+ #    checks: null
+ #    comment: Place plate in Tecan
+
+  - name: Move plate into Chemspeed
+    module: ur5
+    command: run_urp_program
+    args:
+      program_name: "chemspeed2tecan.urp" 
+    checks: null
+    comment: Place plate in Chemspeed deck1
 
   # - name: Remove lid
   #   module: ur5
@@ -37,7 +91,7 @@ flowdef:
   #   module: chemspeed
   #   command: open_chemspeed
   #   args:
-  #     foo: "bar"
+  #    foo: "bar"
   #   checks: RESOURCE_CHECK
   #   comment: resource check not implemented, but will be
 
@@ -56,7 +110,7 @@ flowdef:
   #     name_protocol: "closed_loop2"
   #   checks: RESOURCE_CHECK
   #   comment: resource check not implemented, but will be
-  
+
   # - name: Mix Reactions
   #   module: chemspeed
   #   command: run_chemspeed
@@ -81,33 +135,7 @@ flowdef:
   #   checks: RESOURCE_CHECK
   #   comment: resource check not implemented, but will be
 
-  - name: Open Tecan
-    module: tecan
-    command: open_gate
-    args: 
-      foo: "bar"
-    checks: null
-    comment: Open Tecan Gate
-
-  # - name: Move plate into Tecan
-  #   module: ur5
-  #   command: transfer
-  #   args:
-  #     source: chemspeed.deck1
-  #     target: tecan
-  #     source_plate_rotation: wide
-  #     target_plate_rotation: wide   
-  #   checks: null
-  #   comment: Place plate in Tecan
-
-  - name: run Tecan
-    module: tecan
-    command: run_tecan
-    args: 
-      protocol_path: "path"
-    checks: null
-    comment: Run protocol at tecan
-
+  
   # - name: Open Tecan
   #   module: tecan
   #   command: open_gate
@@ -127,13 +155,7 @@ flowdef:
   #   checks: null
   #   comment: Place plate in Tecan
 
-  # - name: Close Tecan
-  #   module: tecan
-  #   command: close_gate
-  #   args: 
-  #     foo: "bar"
-  #   checks: null
-  #   comment: Close Tecan Gate
+
 
   # - name: Move to camera_module
   #   module: plateEx
