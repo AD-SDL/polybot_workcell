@@ -1,61 +1,46 @@
 from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
 
+def Tecan_Proc(**data):
+    """
+    Description: Reading a csv file with the Absorption spectra and converting to the Lab values
 
+    Parameters:
+        file_name: the complete path and name of the csv file with the absorption spectra
+        the dataframe includes a column named 'wavelength' and columns with the abs spectra named after the 
+        positions on the plate reader, e.g. 'C3', 'C4' etc.
 
-def proc_tecan(**data):
+    Returns:
+        df: a pandas dataframe with the Lab color coordicates
+    """
+
     import pandas as pd
     import csv
     import os
     import json
-    """parses the Hidex csv file
+    import numpy as np 
+    import colour # required to install the Corol library: pip install colour
 
-    Description: TODO
-
-    Parameters:
-        file_name: the complete path and name of the Hidex csv file
-
-    Returns:
-        df: a pandas data frame
-
-
-    """
     file_name = data.get('csv_name')
-    df = pd.DataFrame()
 
-    # extract the reading date, time, and data (into dataframe)
-    DATA = False
-    with open(file_name, newline="") as csvfile:
-        print(f"opened {file_name}")
-        csv.QUOTE_NONNUMERIC = True
-        reader = csv.reader(csvfile)
-        i = 0
-        for row in reader:
-            i += 1
-            row = [x.strip() for x in row]
-            if i == 3: 
-                reading_date, reading_time = row[0].split(" ")
-            if len(row) > 0 and row[0] == "Plate #":
-                df = pd.DataFrame(columns=row)
-                DATA = True
-                continue
-            if DATA == True:
-                df.loc[len(df.index) + 1] = row
+    lab_list = []
 
-    timestamp_list = df.columns[3:].to_list()
-
-    # extract file basename 
-    basename = os.path.basename(file_name) 
-    blob = df.to_dict()
-    t = {}
-    t.update({"timestamp_list" : timestamp_list, "reading_date": reading_date, "reading_time": reading_time, "basename": basename})
-    t.update({"pandas" : blob})
-    blob = json.dumps(blob)
+    for col in file_name.columns.values[1:]:   
+        Trans= 10**(2-file_name[col].values)
+        data_sample = dict(zip(file_name['wavelength'], Trans/100))
+        sd = colour.SpectralDistribution(data_sample)
+        cmfs = colour.MSDS_CMFS['CIE 1931 2 Degree Standard Observer']
+        illuminant = colour.SDS_ILLUMINANTS['D65']
+        XYZ = colour.sd_to_XYZ(sd,cmfs,  illuminant)
+        Lab = colour.XYZ_to_Lab(XYZ / 100)
+        lab_list.append(Lab)
+  
+    df = pd.DataFrame(file_name['wavelength'], pd.DataFrame(lab_list, columns = file_name.columns.values[1:]))
     
-    return blob #df, timestamp_list, reading_date, reading_time, basename 
+    return df 
 
 @generate_flow_definition
 class Tecan_Proc(GladierBaseTool):
-    funcx_functions = [proc_tecan]
+    funcx_functions = [Tecan_Proc]
     required_input = [
         'funcx_endpoint_compute'
     ]

@@ -1,21 +1,20 @@
 from gladier import GladierBaseTool, generate_flow_definition
 
 
-
-def tecan_model_update(**data):
+def Update_Model(**data):
     import pandas as pd
     import csv
     import os
     import json
-    """parses the Hidex csv file
-
-    Description: TODO
+    """
+    Description: Predictive ML model reads the filename with the previous Lab measurements 
+    and the experimental inputs
 
     Parameters:
-        file_name: the complete path and name of the Hidex csv file
+        file_name: the complete path and name of the csv file with the Lab values
 
     Returns:
-        df: a pandas data frame
+        df: a pandas data frame with the next suggested experiments
 
 
     """
@@ -55,7 +54,7 @@ def tecan_model_update(**data):
 
 @generate_flow_definition
 class Model_Update(GladierBaseTool):
-    funcx_functions = [tecan_model_update]
+    funcx_functions = [Update_Model]
     required_input = [
         'funcx_endpoint_compute'
     ]

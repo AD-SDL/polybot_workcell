@@ -1,7 +1,7 @@
 from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
 
 
-def read_tecan(**data): #convert_asc_to_csv(asc_file_path, csv_file_path, delimiter='\t'):
+def Tecan_Read(**data):
     """
     Extracts raw data from Mangelan asc file into a csv file
 
@@ -52,7 +52,7 @@ def read_tecan(**data): #convert_asc_to_csv(asc_file_path, csv_file_path, delimi
 
 @generate_flow_definition
 class Tecan_Read(GladierBaseTool):
-    funcx_functions = [read_tecan]
+    funcx_functions = [Tecan_Read]
     required_input = [
         'funcx_endpoint_compute'
     ]

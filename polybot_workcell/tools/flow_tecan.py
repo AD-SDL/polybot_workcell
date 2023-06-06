@@ -3,7 +3,7 @@ from gladier import GladierBaseClient, generate_flow_definition
 from tecan_read import Tecan_Read
 from tecan_proc import Tecan_Proc
 from gather_data import GatherMetaData
-
+from model_update import Tecan_model_update
 from pathlib import Path
 
 @generate_flow_definition(modifiers={'publishv2_gather_metadata' : {'payload': '$.GatherMetadata.details.result[0]'}})
@@ -18,7 +18,7 @@ class C2Flow(GladierBaseClient):
        'gladier_tools.publish.Publishv2'
     ]
 
-def c2_flow(exp_name,plate_n,time, local_path, fname):
+def tecan_flow(exp_name,plate_n,time, local_path, fname):
         flow_input = {
             'input': {
                 'source_globus_endpoint':'c819ce5c-d3e4-11ed-a9ce-63ca5f6c6821', #hudson ep
@@ -73,4 +73,4 @@ if __name__ == "__main__":
   local_path = "/home/tginsbu/workspace/rpl_workcell/bio_workcell/demo_data/example_report"
   fname = "Campaign1_noIncubate2_20221201_160907.xlsx"
 
-  c2_flow("test_exp", 1, "time", local_path, fname)
+  tecan_flow("test_exp", 1, "time", local_path, fname)
