@@ -1,11 +1,11 @@
 from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
 
 
-def read_tecan(**data):
+def read_tecan(**data): #convert_asc_to_csv(asc_file_path, csv_file_path, delimiter='\t'):
     """
-    Extracts Raw OD(590) data from Hidex excel file into csv file
+    Extracts raw data from Mangelan asc file into a csv file
 
-    :param str filename: filename of Hidex excel file to convert
+    :param str filename: filename of Mangelan asc file to convert
 
     output: path of new csv file (str)
 
@@ -14,23 +14,40 @@ def read_tecan(**data):
     from pathlib import Path
     import pandas as pd
     import csv
-
+    delimiter='\t'
+    data = {'wavelength': []}
+    column_names = set()
     filepath = data.get('local_path')
     filename = data.get('proc_folder') + "/" +  data.get("remote_file")
-    sheet_name = "Raw OD(590)"
-    csv_filename = None
+
+    with open(os.path.join(filepath, filename), 'r', encoding="utf-16-le") as input_file:
+        for line in input_file:
+            line = line.strip()
+
+            if line.startswith('*'):
+                fields = line[2:].replace('nm', '').split(delimiter)
+                data['wavelength'].extend(fields)
+            elif line.startswith('C'):
+                columns = line.split(delimiter)
+                column_name = columns[0]
+                column_values = columns[1:]
+                data[column_name] = column_values
+                column_names.add(column_name)
+
     if os.path.exists(filename):
-        excel_basename = os.path.splitext(os.path.basename(filename))[0]
-        csv_filename = excel_basename + ".csv" #"_RawOD.csv"
+        asc_basename = os.path.splitext(os.path.basename(filename))[0]
+        csv_filename = asc_basename + ".csv"
         csv_filepath = filename.replace(os.path.basename(filename), csv_filename)
 
-    # convert Raw OD(590) excel sheet to new csv file
-    excel_OD_data = pd.read_excel(filename, sheet_name=sheet_name, index_col=None)
-    excel_OD_data.columns = excel_OD_data.iloc[7][:]
-    excel_OD_data = excel_OD_data[8:]
-    excel_OD_data.to_csv(csv_filepath, encoding="utf-8", index=False)
-    return csv_filepath
+    with open(csv_filepath, 'w', newline='') as output_file:
+        csv_writer = csv.writer(output_file)
+        csv_writer.writerow(['wavelength'] + sorted(column_names))
+        num_rows = max(len(data['wavelength']), max(len(values) for values in data.values() if isinstance(values, list)))
+        for i in range(num_rows):
+            row = [data[column][i] if i < len(data[column]) else '' for column in ['wavelength'] + sorted(column_names)]
+            csv_writer.writerow(row)
 
+    return csv_filepath
 
 
 @generate_flow_definition
