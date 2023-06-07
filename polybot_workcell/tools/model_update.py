@@ -9,6 +9,7 @@ from sklearn.externals import joblib
 
 inventory = ["CCCC", "CCCCCC", "CCC", "CCCCCCC", "CCCCO"]
 
+# helper functions to get the molecular fingerprint representation format
 def smile_to_bits(smile):
   mol = Chem.MolFromSmiles(smile)
   return AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024, useChirality=True)  
@@ -75,11 +76,10 @@ def create_predictions_dataset(inventory):
     dataset = pd.concat(data_all, axis=0)
     return dataset
 
-def train_model(model, X_train, y_train):
-    regr_rf = joblib.load('random_forest_model.pkl')
-    regr_rf.fit(X_train, y_train)
-    joblib.dump(regr_rf, 'random_forest_model.pkl')    
-    return regr_rf
+def train_model(model, X_train, y_train):    
+    model.fit(X_train, y_train)
+    joblib.dump(model, 'random_forest_model.pkl')    
+    return model
 
 def predict(model, dataset):
     preds = model.predict(dataset)
