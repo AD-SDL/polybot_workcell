@@ -28,41 +28,52 @@ def bits_to_df(smiles, prefix):
   df.columns = columns
   return df
 
+
 def create_predictions_dataset(inventory):
-    """Given the inventory as a list we want to create a dataset of all possible combinatios 
+    """Given the inventory as a list, create a dataset of all possible combinations
        and ratios of the first molecule of the list with the remaining ones.
-       This dataset is the input to the trained predictive model.    
+       This dataset is the input to the trained predictive model.
 
     Parameters:
-        inventory: SMIILES list of molecules available in Chemspeed
+        inventory: SMILES list of molecules available in Chemspeed
 
     Returns:
         df: a pandas dataframe with all the possible pairs of the inventory
-
     """
-    data_all=[]
-    for smiles in inventory:        
-        data_all.append(create_predictions_dataset(inventory, smiles))
+    percentage_1 = np.array([50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]) / 100
+    percentage_2 = 1 - percentage_1
+    percentage_3 = np.zeros(len(percentage_1))
+    smiles1 = inventory[0]  # the first molecule of the inventory is going to be the standardized one
+
+    data_all = []
+    for smiles2 in inventory:
+        validation = pd.DataFrame({
+            'smiles1': np.repeat(smiles1, len(percentage_1)),
+            'smiles2': np.repeat(smiles2, len(percentage_1)),
+            'smiles3': np.repeat(0, len(percentage_1)),
+            'percentage_1': percentage_1,
+            'percentage_2': percentage_2,
+            'percentage_3': percentage_3
+        })
+
+        validation_1 = bits_to_df(validation['smiles1'], 'bit_1')
+        validation_2 = bits_to_df(validation['smiles2'], 'bit_2')
+        validation_3 = bits_to_df(validation['smiles3'], 'bit_3')
+
+        validation_dataset = pd.concat([
+            validation['smiles2'],
+            validation_1,
+            validation[['percentage_1']],
+            validation_2,
+            validation[['percentage_2']],
+            validation_3,
+            validation[['percentage_3']]
+        ], axis=1)
+
+        data_all.append(validation_dataset)
+
     dataset = pd.concat(data_all, axis=0)
     return dataset
-
-def create_predictions_dataset(inventory, smiles2):
-    percentage_1 = np.array([50,55, 60, 65, 70, 75, 80, 85, 90, 95, 100])/100
-    percentage_2 = (1 - percentage_1)
-    percentage_3 = (np.zeros(len(percentage_1)))
-    smiles1 = inventory[0] # the first molecule of the inventory is going to be the standarized one
-    validation = pd.concat([pd.DataFrame(np.repeat(smiles1, len(percentage_1),axis=0), columns=['smiles1']),
-                            pd.DataFrame(np.repeat(smiles2, len(percentage_1),axis=0), columns=['smiles2']),
-    pd.DataFrame(percentage_3, columns=['smiles3']) ,
-    pd.DataFrame(percentage_1, columns=['percentage_1']), 
-    pd.DataFrame(percentage_2, columns=['percentage_2']),
-    pd.DataFrame(percentage_3, columns=['percentage_3'])], axis=1)
-
-    validation_1 =  bits_to_df(validation.smiles1, 'bit_1')
-    validation_2 =  bits_to_df(validation.smiles2, 'bit_2')
-    validation_3 =  bits_to_df(validation.smiles3, 'bit_3')
-    validation_dataset = pd.concat([validation.smiles2, validation_1,validation[['percentage_1']], validation_2,validation[['percentage_2']], validation_3,validation[['percentage_3']]], axis=1) 
-    return validation_dataset
 
 def train_model(model, X_train, y_train):
     regr_rf = joblib.load('random_forest_model.pkl')
@@ -73,7 +84,7 @@ def train_model(model, X_train, y_train):
 def predict(model, dataset):
     preds = model.predict(dataset)
     dataset['preds'] = preds
-    df =df.sort_values(by=['preds']).head(6)
+    df =df.sort_values(by=['preds']).head(6) # select the top 6 predictions to run
     return dataset
 
 def Update_Model(**data):
