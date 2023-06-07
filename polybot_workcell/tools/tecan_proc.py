@@ -18,7 +18,7 @@ def Tecan_Proc(**data):
     import os
     import json
     import numpy as np 
-    import colour # required to install the Corol library: pip install colour
+    import colour # requires to install the Corol library: pip install colour
 
     file_name = data.get('csv_name')
 
