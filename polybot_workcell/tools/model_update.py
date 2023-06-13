@@ -145,7 +145,7 @@ def Update_Model(**data):
     dataset = create_predictions_dataset(inventory) # load the dataset of possible combinations
     df = predict(model, dataset) # gives the Lab values to all the possible combinations dataset
     selected_color = [30, 35]
-    select_next_exp(df, selected_color)
+    df = select_next_exp(df, selected_color)
     return df # this file should go to chemspeed
 
 create_predictions_dataset(inventory)
