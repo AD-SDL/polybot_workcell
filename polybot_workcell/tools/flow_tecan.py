@@ -3,7 +3,7 @@ from gladier import GladierBaseClient, generate_flow_definition
 from tecan_read import Tecan_Read
 from tecan_proc import Tecan_Proc
 from gather_data import GatherMetaData
-from model_update import Tecan_model_update
+from model_update import Update_Model
 from pathlib import Path
 
 @generate_flow_definition(modifiers={'publishv2_gather_metadata' : {'payload': '$.GatherMetadata.details.result[0]'}})
