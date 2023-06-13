@@ -78,8 +78,7 @@ def create_predictions_dataset(inventory):
     print(validation_1.values[0][:300])
     return dataset
 
-def get_train_data_representation(dataframe):
-   
+def get_train_data_representation(dataframe):   
    """Given the dataframe with the experimental results, i.e., smiles + ratios + extracted Lab values
       return the finger print representation"""
    
@@ -101,7 +100,7 @@ def train_model(model, X_train, y_train):
 
 def predict(model, dataset):
     """Predicts the Lab values for a given dataset"""
-    preds = model.predict(dataset)
+    preds = model.predict(dataset.iloc[:, 1:])
     dataset['L'] = preds[:, 0]
     dataset['a'] = preds[:, 1]
     dataset['b'] = preds[:, 2]
@@ -112,9 +111,9 @@ def select_next_exp(dataframe, selected_color):
     dist = distance.cdist(selected_color, coords, 'euclidean')
     dataframe['euclidean_distance'] = dist.ravel()
     df = dataframe.sort_values(by=['euclidean_distance']).head(6) # select the 6 points closer to the selected color value
-    return df 
+    return df[['smiles2', 'percentage_2']]
 
-def Update_Model(**data):
+def Update_Model():
     import pandas as pd
     import csv
     import os
@@ -137,19 +136,21 @@ def Update_Model(**data):
     """
     #file_name = data.get('csv_name')
     #df = pd.DataFrame()
-    experimental_df = pd.DataFrame() # df with combined the tecan results and the initial experiment parameters (i.e., smiles + ratios)
+    experimental_df = pd.read_csv('demo_data/ECP_train_data.csv') # df with combined the tecan results and the initial experiment parameters (i.e., smiles + ratios)
+    experimental_df_repr = get_train_data_representation(experimental_df)
     model = joblib.load('polybot_workcell/tools/saved_checkpoints/random_forest_model.pkl')
-    X_train, y_train = experimental_df.iloc[:, :-1], experimental_df.iloc[ :, -1]
-    train_model(model, X_train, y_train) # trains the model on the collected data
-
+    X_train, y_train = experimental_df_repr.iloc[:, :-3], experimental_df_repr.iloc[ :, -3:]
+    train_model(model, X_train.values, y_train.values) # trains the model on the collected data
     dataset = create_predictions_dataset(inventory) # load the dataset of possible combinations
-    df = predict(model, dataset) # gives the Lab values to all the possible combinations dataset
-    selected_color = [30, 35]
+    df = predict(model, dataset.iloc[:, :]) # gives the Lab values to all the possible combinations dataset
+    selected_color = [(30, 35)]
     df = select_next_exp(df, selected_color)
+    print(df)
+    # check the index on the inventory and update the file that goes to chemspeed
     return df # this file should go to chemspeed
 
-create_predictions_dataset(inventory)
-
+#create_predictions_dataset(inventory)
+Update_Model()
 #@generate_flow_definition
 #class Model_Update(GladierBaseTool):
 #    funcx_functions = [Update_Model]
