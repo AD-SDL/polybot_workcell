@@ -14,7 +14,7 @@ modules:
     type: wei_ros_node
     model: ur5
     config:
-      ros_node: '/ur5_client/UR5_Client_Node'
+      ros_node: '/std_ns/UR5_Client_Node'
     positions:
       ip: "146.139.48.76"
       home_cartesian: [0.1288272570978584, -0.011773523813946023, 0.3934452007940641, 2.4296169295493315, -1.7169105640970035, 0.17232006084924809]
