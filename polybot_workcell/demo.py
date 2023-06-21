@@ -3,19 +3,29 @@
 import logging
 from pathlib import Path
 from argparse import ArgumentParser
-from rpl_wei.wei_workcell_base import WEI
+from rpl_wei import Experiment
 from pathlib import Path
 
 def main():
     wf_path = Path('/home/rpl/workspace/polybot_workcell/polybot_workcell/workflows/demo.yaml')
 
-    wei_client = WEI(wf_config = wf_path.resolve(), workcell_log_level=logging.ERROR, workflow_log_level=logging.ERROR)
+    exp = Experiment("127.0.0.1","8000","CNM Experiment")
+    exp.register_exp()
 
-    payload={
-        }
+    flow_info = exp.run_job(wf_path.resolve(), simulate = False)
+    print(flow_info)
+    flow_status =exp.query_job(flow_info['job_id'])
+    print(flow_status)
 
-    run_info = wei_client.run_workflow(payload=payload)
-    print(run_info)
+    while flow_status["status"] != "finished":
+        flow_status = exp.query_job(flow_info["job_id"])
+    print(flow_status)
+
+    # payload={
+    #     }
+
+    # run_info = wei_client.run_workflow(payload=payload)
+    # print(run_info)
 
 if __name__ == "__main__":
     main()
