@@ -46,21 +46,21 @@ flowdef:
 #   checks: null
 #   comment: Open Tecan Gate
 
-# - name: run Tecan
-#   module: tecan
-#   command: run_tecan
-#   args: 
-#     protocol_path: "path"
-#   checks: null
-#   comment: Run protocol at tecan
+#  - name: run Tecan
+#    module: tecan
+#    command: run_tecan
+#    args: 
+#      protocol_path: "path"
+#    checks: null
+#    comment: Run protocol at tecan
 
-# - name: Close Tecan
-#   module: tecan
-#   command: close_gate
-#   args: 
-#     foo: "bar"
-#   checks: null
-#   comment: Close Tecan Gate
+#  - name: Close Tecan
+#    module: tecan
+#    command: close_gate
+#    args: 
+#      foo: "bar"
+#    checks: null
+#    comment: Close Tecan Gate
 
  #- name: Move plate into Tecan
  #    module: ur5
