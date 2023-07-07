@@ -62,7 +62,15 @@ flowdef:
     protocol_path: "path"
   checks: null
   comment: Run protocol at tecan
-
+  
+- name: Open Tecan
+  module: tecan
+  command: open_gate
+  args: 
+    foo: "bar"
+  checks: null
+  comment: Open Tecan Gate
+  
 - name: Move plate from Tecan to Chemspeed
   module: ur5
   command: run_urp_program
