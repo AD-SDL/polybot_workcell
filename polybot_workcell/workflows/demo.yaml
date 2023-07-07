@@ -14,29 +14,29 @@ modules:
 
 flowdef:
 
-#- name: Mix Reactions
-#  module: chemspeed
-#  command: open_chemspeed
-#  args:
-#    foo: "bar"
-#  checks: RESOURCE_CHECK
-#  comment: resource check not implemented, but will be
+# - name: Open Chemspeed
+#   module: chemspeed
+#   command: open_chemspeed
+#   args:
+#     foo: "bar"
+#   checks: RESOURCE_CHECK
+#   comment: resource check not implemented, but will be
 
-#- name: Mix Reactions
-#  module: chemspeed
-#  command: run_chemspeed
-#  args:
-#    name_protocol: "closed_loop1"
-#  checks: RESOURCE_CHECK
-#  comment: resource check not implemented, but will be
+# - name: Mix Reactions
+#   module: chemspeed
+#   command: run_chemspeed
+#   args:
+#     name_protocol: "closed_loop1"
+#   checks: RESOURCE_CHECK
+#   comment: resource check not implemented, but will be
 
-#- name: Mix Reactions
-#  module: chemspeed
-#  command: close_chemspeed
-#  args:
-#    name_protocol: "closed_loop1"
-#  checks: RESOURCE_CHECK
-#  comment: resource check not implemented, but will be
+# - name: Close chemspeed
+#   module: chemspeed
+#   command: close_chemspeed
+#   args:
+#     name_protocol: "closed_loop1"
+#   checks: RESOURCE_CHECK
+#   comment: resource check not implemented, but will be
 
 # - name: Open Tecan
 #   module: tecan
@@ -46,21 +46,37 @@ flowdef:
 #   checks: null
 #   comment: Open Tecan Gate
 
-#  - name: run Tecan
-#    module: tecan
-#    command: run_tecan
-#    args: 
-#      protocol_path: "path"
-#    checks: null
-#    comment: Run protocol at tecan
+- name: Move plate from Chemspeed to Tecan
+  module: ur5
+  command: run_urp_program
+  args:
+    program_name: "chemspeed2tecan.urp" 
+  checks: null
+  comment: Place plate in Chemspeed deck1
 
-#  - name: Close Tecan
-#    module: tecan
-#    command: close_gate
-#    args: 
-#      foo: "bar"
-#    checks: null
-#    comment: Close Tecan Gate
+- name: run Tecan
+  module: tecan
+  command: run_tecan
+  args: 
+    protocol_path: "path"
+  checks: null
+  comment: Run protocol at tecan
+
+- name: Move plate from Tecan to Chemspeed
+  module: ur5
+  command: run_urp_program
+  args:
+    program_name: "tecan2chemspeed.urp" 
+  checks: null
+  comment: Place plate in Chemspeed deck1
+
+- name: Close Tecan
+  module: tecan
+  command: close_gate
+  args: 
+    foo: "bar"
+  checks: null
+  comment: Close Tecan Gate
 
  #- name: Move plate into Tecan
  #    module: ur5
@@ -70,13 +86,7 @@ flowdef:
  #    checks: null
  #    comment: Place plate in Tecan
 
-  - name: Move plate into Chemspeed
-    module: ur5
-    command: run_urp_program
-    args:
-      program_name: "chemspeed2tecan.urp" 
-    checks: null
-    comment: Place plate in Chemspeed deck1
+
 
   # - name: Remove lid
   #   module: ur5
