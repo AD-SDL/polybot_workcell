@@ -1,10 +1,9 @@
+name: DEMO - Workflow
+
 metadata:
-  name: PCR - Workflow
   author: Doga Ozgulbas
   info: Initial PCR workflow for RPL workcell
   version: 0.1
-
-workcell: /home/rpl/workspace/polybot_workcell/polybot_workcell/polybot_workcell.yaml
 
 modules:
   - name: chemspeed
