@@ -4,11 +4,10 @@ from pathlib import Path
 from rpl_wei import Experiment
 from pathlib import Path
 
+from time import sleep
 
 def main():
-    wf_path = Path(
-        "/home/rpl/workspace/polybot_workcell/polybot_app/workflows/demo.yaml"
-    )
+    wf_path = Path("/home/rpl/workspace/polybot_workcell/polybot_app/workflows/demo.yaml")
 
     exp = Experiment("127.0.0.1", "8000", "CNM Experiment")
     exp.register_exp()
