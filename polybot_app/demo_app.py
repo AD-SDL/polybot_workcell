@@ -20,6 +20,8 @@ def main():
 
     while flow_status["status"] != "finished":
         flow_status = exp.query_job(flow_info["job_id"])
+        print(flow_status)
+        sleep(1)
     print(flow_status)
 
     # payload={
