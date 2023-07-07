@@ -1,10 +1,10 @@
+name: Exploration Workflow Test
+
 metadata:
-  name: Exploration Workflow Test
   author: Doga Ozgubas, Rafael Vescov
   info: Initial workflow for workcell validation
   version: 0.1
 
-workcell: /home/rpl/workspace/rpl_workcell/pcr_workcell/pcr_workcell.yaml
 
 modules:
   - name: ur5
