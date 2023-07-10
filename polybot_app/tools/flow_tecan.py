@@ -4,7 +4,7 @@ from tecan_read import Tecan_Read
 from tecan_proc import Tecan_Proc
 from gather_data import GatherMetaData
 from model_update import Update_Model
-from pathlib import Path
+import os
 
 @generate_flow_definition(modifiers={'publishv2_gather_metadata' : {'payload': '$.GatherMetadata.details.result[0]'}})
 class C2Flow(GladierBaseClient):
@@ -18,13 +18,16 @@ class C2Flow(GladierBaseClient):
        'gladier_tools.publish.Publishv2'
     ]
 
-def tecan_flow(exp_name,plate_n,time, local_path, fname):
+def tecan_flow(exp_name,plate_n,time, local_path, file_name):
+        remote_folder = 
         flow_input = {
             'input': {
-                'source_globus_endpoint':'c819ce5c-d3e4-11ed-a9ce-63ca5f6c6821', #hudson ep
-                'destination_globus_endpoint':'f9726362-96a7-11ed-b310-55098fa75e99', #ripchip ep
-                'funcx_endpoint_compute':'95038e17-339b-4462-9c9f-a8473809af25', #ripchip funcx
-                'funcx_endpoint_non_compute':'95038e17-339b-4462-9c9f-a8473809af25', #ripchip funcx
+                'transfer_source_endpoint_id':'c819ce5c-d3e4-11ed-a9ce-63ca5f6c6821', #Tecan endpoint
+                'transfer_source_path': os.path.join(local_path, file_name), # Tecan file location
+                'transfer_destination_endpoint_id':'f9726362-96a7-11ed-b310-55098fa75e99', #Batman enpoint
+                'trasnfer_destination_path': os.path.join(remote_folder, file_name)
+                'funcx_endpoint_compute':'95038e17-339b-4462-9c9f-a8473809af25', #Batman funcx
+                'funcx_endpoint_non_compute':'95038e17-339b-4462-9c9f-a8473809af25', #Batman funcx
                 'exp_name':exp_name,
                 'plate_n':plate_n,
                 'make_input': local_path,
@@ -51,7 +54,7 @@ def tecan_flow(exp_name,plate_n,time, local_path, fname):
                 #     'dataset': str(folder_path.expanduser()),
                 #     'index': '4e2884b0-e585-4913-8a33-4be155ebb06c',
                 #     'project': 'bio',
-                #     'source_globus_endpoint': '95038e17-339b-4462-9c9f-a8473809af25',
+                #     'transfer_source_endpoint_id': '95038e17-339b-4462-9c9f-a8473809af25',
                 #     'source_collection_basepath': '/',
                 #     'metadata': {},
                 #     'destination':str(dest_path)
