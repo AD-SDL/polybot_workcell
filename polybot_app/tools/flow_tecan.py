@@ -81,5 +81,6 @@ if __name__ == "__main__":
   local_path = "/home/rpl/workspace/polybot_workcell/demo_data/ECP_demo_batch_1.asc"
   fname = "ECP_demo_batch_1.asc"
   exp_name = "first_exp"
+  
 
   tecan_flow(exp_name = exp_name, plate_n = 1, time = "time", local_path = local_path, fname = fname)
