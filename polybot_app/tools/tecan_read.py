@@ -1,7 +1,7 @@
-from gladier import GladierBaseClient, generate_flow_definition, GladierBaseTool
+from gladier import generate_flow_definition, GladierBaseTool
 
 
-def Tecan_Read(**data):
+def tecan_read(**data):
     """
     Extracts raw data from Mangelan asc file into a csv file
 
@@ -11,16 +11,13 @@ def Tecan_Read(**data):
 
     """
     import os
-    from pathlib import Path
-    import pandas as pd
     import csv
     delimiter='\t'
     data = {'wavelength': []}
     column_names = set()
-    filepath = data.get('local_path')
-    filename = data.get('proc_folder') + "/" +  data.get("remote_file")
+    filename = data.get('proc_folder') + "/" +  data.get("fname")
 
-    with open(os.path.join(filepath, filename), 'r', encoding="utf-16-le") as input_file:
+    with open(filename, 'r', encoding="utf-16-le") as input_file:
         for line in input_file:
             line = line.strip()
 
@@ -50,9 +47,9 @@ def Tecan_Read(**data):
     return csv_filepath
 
 
-@generate_flow_definition
+@generate_flow_definition()
 class Tecan_Read(GladierBaseTool):
-    funcx_functions = [Tecan_Read]
+    compute_functions = [tecan_read]
     required_input = [
-        'funcx_endpoint_compute'
+        "compute_endpoint"
     ]
